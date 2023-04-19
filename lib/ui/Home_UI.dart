@@ -18,8 +18,6 @@ class _Home_UIState extends State<Home_UI> {
   int _currentIndex = 1;
   List<Widget> _pages = [GioHang_UI(),CuaHang_UI(),TaiKhoan_UI()];
 
-  
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

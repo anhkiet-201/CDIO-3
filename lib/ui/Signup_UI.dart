@@ -1,13 +1,20 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
+import 'package:interior_app/Utils/Utils.dart';
 import 'package:interior_app/component/CustomTextField.dart';
+import 'package:interior_app/data/LoginData.dart';
+import 'package:interior_app/models/User.dart';
 
 import '../component/EmailField.dart';
 import '../component/PasswordField.dart';
 import '../component/Style.dart';
 
 class Signup_UI extends StatelessWidget {
-  const Signup_UI({Key? key}) : super(key: key);
-
+   Signup_UI({Key? key}) : super(key: key);
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _repassController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +41,7 @@ class Signup_UI extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 const Text(
-                                  'Signup,',
+                                  'Đăng ký,',
                                   style: TextStyle(
                                       fontSize: 40,
                                       fontWeight: FontWeight.bold
@@ -43,7 +50,7 @@ class Signup_UI extends StatelessWidget {
                                   maxLines: 1,
                                 ),
                                 Text(
-                                  'Create a new account,',
+                                  'Đăng ký tài khoản mới,',
                                   style: TextStyle(
                                       fontSize: 35,
                                       color: Colors.black.withOpacity(0.6)
@@ -59,36 +66,45 @@ class Signup_UI extends StatelessWidget {
                     ),
                     EmailField(
                       hintText: 'Email',
-                      //controller: _emailController,
+                      controller: _emailController,
                     ),
                     SizedBox(height: 30,),
                     CustomTextField(
                       hintText: 'Username',
+                      controller: _usernameController,
                     ),
                     SizedBox(height: 30,),
                     PasswordField(
-                      //controller: _passController,
-                      hintText: 'Enter password',
+                      controller: _passController,
+                      hintText: 'Mật khẩu',
                     ),
                     SizedBox(height: 30,),
                     PasswordField(
-                      //controller: _passController,
-                      hintText: 'Retype password',
+                      controller: _repassController,
+                      hintText: 'Nhập lại password',
                     ),
-                    SizedBox(height: 50,),
+                    const SizedBox(height: 50,),
                     SizedBox(
                       height: 50,
                       child:ElevatedButton(
                         style: CustomButtonStyle(),
                         onPressed: (){
-                          // bloc.add(Login_request(_emailController.text, _passController.text));
+                          if(_passController.text == _repassController.text){
+                            if(signUp_d(User(name: _usernameController.text, pass: _passController.text, email: _emailController.text.trim()))){
+                              showSnackBar(context, contentType: ContentType.success, title: "Thông báo!", message: "Thành công!");
+                              Navigator.of(context).pop();
+                            }
+                          }
+                          else{
+                            showSnackBar(context, contentType: ContentType.failure, title: "Thông báo!", message: "mật khẩu đã nhập không trùng!");
+                          }
                         },
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
                           children: const [
                             Flexible(
                               child: Text(
-                                'Signup',
+                                'Đăng ký',
                                 style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold

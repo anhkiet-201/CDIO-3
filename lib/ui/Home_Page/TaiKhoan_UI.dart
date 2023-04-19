@@ -82,7 +82,7 @@ class _TaiKhoan_UIState extends State<TaiKhoan_UI> {
                 Icon(Iconsax.personalcard,size: 75,),
                 SizedBox(width: 10,),
                 Text(
-                    'Hồ Anh Kiệt',
+                    '${user?.name}',
                   style: TextStyle(
                     fontSize: 25,
                     fontWeight: FontWeight.bold

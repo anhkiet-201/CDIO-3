@@ -18,8 +18,8 @@ class GioHangData {
     // numList = List.filled(gioHangData.length, Random().nextInt(5) + 1);
   }
 
-  add(int num){
-    gioHangData.add(Product(maSp: '001', donGia: 1230000, maDM: 'DM01', tenSp: 'Bàn ăn gia đình',img: 'img.png'));
+  add(int num,Product product){
+    gioHangData.add(product);
     checkList.add(false);
     numList.add(num);
   }

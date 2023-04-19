@@ -3,14 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:interior_app/component/CustomAppbar.dart';
 import 'package:interior_app/data/GioHangData.dart';
+import 'package:interior_app/data/ProductsData.dart';
+import 'package:interior_app/models/Product.dart';
 
 import '../Utils/Utils.dart';
 import 'ViewMore_UI.dart';
 import '../data/LoginData.dart';
 
 class Detail_UI extends StatefulWidget {
-  const Detail_UI({Key? key}) : super(key: key);
-
+  const Detail_UI({Key? key, required this.product}) : super(key: key);
+  final Product product;
   @override
   State<Detail_UI> createState() => _Detail_UIState();
 }
@@ -42,12 +44,12 @@ class _Detail_UIState extends State<Detail_UI> {
               height: 250,
               child: ClipRRect(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                child: Image.asset('images/img.png',fit: BoxFit.cover,),
+                child: Image.asset('images/${widget.product.img}',fit: BoxFit.cover,),
               ),
             ),
             SizedBox(height: 20,),
             Text(
-              'Bàn ăn gia đình',
+              '${widget.product.tenSp}',
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold
@@ -55,7 +57,7 @@ class _Detail_UIState extends State<Detail_UI> {
             ),
             SizedBox(height: 20,),
             Text(
-              '10.000.000 vnđ',
+              doubleToVnd(widget.product.donGia),
               style: TextStyle(
                 fontSize: 20
               ),
@@ -154,7 +156,7 @@ class _Detail_UIState extends State<Detail_UI> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             buildButton('Thêm vào giỏ',onClick: (){
-              gh.add(_num);
+              gh.add(_num,widget.product);
               showSnackBar(context, contentType: ContentType.help, title: 'Thông báo', message: 'Thành công');
             }),
             buildButton('Mua ngay'),
@@ -226,7 +228,7 @@ class _Detail_UIState extends State<Detail_UI> {
               child: ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
-                itemCount: 10,
+                itemCount: productData.length,
                 itemBuilder: (_,index){
                   return GestureDetector(
                     child: Container(
@@ -238,7 +240,7 @@ class _Detail_UIState extends State<Detail_UI> {
                             flex: 2,
                             child: ClipRRect(
                               borderRadius: const BorderRadius.all(Radius.circular(10)),
-                              child: Image.asset('images/img.png',fit: BoxFit.cover,),
+                              child: Image.asset('images/${productData[index].img}',fit: BoxFit.cover,),
                             ),
                           ),
                           Expanded(
@@ -248,7 +250,7 @@ class _Detail_UIState extends State<Detail_UI> {
                               child: Column(
                                 children: [
                                   Text(
-                                    'Bàn ăn gia đình',
+                                    '${productData[index].tenSp}',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.bold
@@ -256,7 +258,7 @@ class _Detail_UIState extends State<Detail_UI> {
                                   ),
                                   SizedBox(height: 5,),
                                   Text(
-                                      '12.000.000 vnđ'
+                                      doubleToVnd(productData[index].donGia)
                                   )
                                 ],
                               ),
@@ -266,7 +268,7 @@ class _Detail_UIState extends State<Detail_UI> {
                       ),
                     ),
                     onTap: (){
-                      startActivity(context, Detail_UI());
+                      startActivity(context, Detail_UI(product: productData[index],));
                     },
                   );
                 },

@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:interior_app/Utils/Utils.dart';
+import 'package:interior_app/data/ProductsData.dart';
 import 'package:interior_app/ui/Detail_UI.dart';
 import 'package:interior_app/ui/ViewMore_UI.dart';
 
@@ -87,7 +88,7 @@ class _CuaHang_UIState extends State<CuaHang_UI> {
                     child: ListView.builder(
                       physics: const BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
-                      itemCount: 10,
+                      itemCount: productData.length,
                       itemBuilder: (_,index){
                         return GestureDetector(
                           child: Container(
@@ -99,7 +100,7 @@ class _CuaHang_UIState extends State<CuaHang_UI> {
                                   flex: 2,
                                   child: ClipRRect(
                                     borderRadius: const BorderRadius.all(Radius.circular(10)),
-                                    child: Image.asset('images/img.png',fit: BoxFit.cover,),
+                                    child: Image.asset('images/${productData[index].img}',fit: BoxFit.cover,),
                                   ),
                                 ),
                                 Expanded(
@@ -109,7 +110,7 @@ class _CuaHang_UIState extends State<CuaHang_UI> {
                                     child: Column(
                                       children: [
                                         Text(
-                                          'Bàn ăn gia đình',
+                                          '${productData[index].tenSp}',
                                           style: TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold
@@ -117,7 +118,7 @@ class _CuaHang_UIState extends State<CuaHang_UI> {
                                         ),
                                         SizedBox(height: 5,),
                                         Text(
-                                            doubleToVnd(12000000)
+                                            doubleToVnd(productData[index].donGia)
                                         )
                                       ],
                                     ),
@@ -127,7 +128,7 @@ class _CuaHang_UIState extends State<CuaHang_UI> {
                             ),
                           ),
                           onTap: (){
-                            startActivity(context, Detail_UI());
+                            startActivity(context, Detail_UI(product: productData[index],));
                           },
                         );
                       },

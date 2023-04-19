@@ -1,7 +1,9 @@
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:interior_app/data/LoginData.dart';
 import 'package:interior_app/ui/Home_UI.dart';
+import 'package:interior_app/ui/Signup_UI.dart';
 
 import '../Utils/Utils.dart';
 import '../component/EmailField.dart';
@@ -115,6 +117,9 @@ class Login_UI extends StatelessWidget {
                             style: TextStyle(
                               color: Colors.blue
                             ),
+                            recognizer: TapGestureRecognizer()..onTap = (){
+                              startActivity(context,  Signup_UI());
+                            }
                           )
                         ]
                       ),

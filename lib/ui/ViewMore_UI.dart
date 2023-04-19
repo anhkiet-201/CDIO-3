@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:interior_app/Utils/Utils.dart';
+import 'package:interior_app/data/ProductsData.dart';
 
 import '../component/CustomAppbar.dart';
 
@@ -19,7 +21,8 @@ class _ViewMore_UIState extends State<ViewMore_UI> {
         child: GridView.builder(
           physics: BouncingScrollPhysics(),
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,mainAxisSpacing: 5,crossAxisSpacing: 5, mainAxisExtent:400),
-          itemBuilder: (index,_){
+          itemCount: productData.length,
+          itemBuilder: (_,index){
             return Container(
               child: Column(
                 children: [
@@ -27,7 +30,7 @@ class _ViewMore_UIState extends State<ViewMore_UI> {
                     flex: 4,
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(10)),
-                      child: Image.asset('images/img.png',fit: BoxFit.cover,),
+                      child: Image.asset('images/${productData[index].img}',fit: BoxFit.cover,),
                     ),
                   ),
                   Expanded(
@@ -37,7 +40,7 @@ class _ViewMore_UIState extends State<ViewMore_UI> {
                       child: Column(
                         children: [
                           Text(
-                            'Bàn ăn gia đình',
+                            '${productData[index].tenSp}',
                             style: TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold
@@ -45,7 +48,7 @@ class _ViewMore_UIState extends State<ViewMore_UI> {
                           ),
                           SizedBox(height: 5,),
                           Text(
-                              '12.000.000 vnđ'
+                              doubleToVnd(productData[index].donGia)
                           )
                         ],
                       ),
